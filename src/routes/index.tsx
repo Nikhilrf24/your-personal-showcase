@@ -32,7 +32,7 @@ function Index() {
           alt=""
           width={1600}
           height={1200}
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
+          className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-multiply"
         />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>

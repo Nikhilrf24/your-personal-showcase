@@ -26,7 +26,7 @@ export function SiteHeader() {
             <Link
               key={n.to}
               to={n.to}
-              className="text-muted-foreground transition-colors hover:text-foreground"
+              className="link-sweep text-muted-foreground transition-colors hover:text-foreground"
               activeProps={{ className: "text-primary" }}
               activeOptions={{ exact: n.to === "/" }}
             >
