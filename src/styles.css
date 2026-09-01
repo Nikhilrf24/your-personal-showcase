@@ -145,7 +145,7 @@
 }
 
 @utility outline-text {
-  color: transparent;
+  color: color-mix(in oklab, var(--foreground) 12%, transparent);
   -webkit-text-stroke: 3px var(--foreground);
 }
 
