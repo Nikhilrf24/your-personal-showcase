@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import heroImg from "@/assets/hero.jpg";
+import heroImg from "@/assets/hero-bg.jpg";
 import { Marquee } from "@/components/site-chrome";
 import { profile, stats, experience, projects } from "@/lib/resume";
 
@@ -32,8 +32,9 @@ function Index() {
           alt=""
           width={1600}
           height={1200}
-          className="absolute inset-0 h-full w-full object-cover opacity-15 mix-blend-multiply"
+          className="absolute inset-0 h-full w-full object-cover"
         />
+        <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
           <h1 className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]">
