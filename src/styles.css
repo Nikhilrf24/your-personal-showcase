@@ -146,7 +146,7 @@
 
 @utility outline-text {
   color: transparent;
-  -webkit-text-stroke: 2.5px color-mix(in oklab, var(--foreground) 85%, transparent);
+  -webkit-text-stroke: 3px var(--foreground);
 }
 
 @utility link-sweep {
