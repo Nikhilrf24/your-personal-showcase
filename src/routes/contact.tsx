@@ -48,7 +48,15 @@ function Contact() {
                 <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
                   {l.label}
                 </span>
-                <span className="display break-all text-3xl md:text-5xl">{l.value}</span>
+                <span
+                  className={
+                    l.label === "Email"
+                      ? "break-all font-mono text-xl font-medium tracking-tight md:text-3xl"
+                      : "display break-all text-3xl md:text-5xl"
+                  }
+                >
+                  {l.value}
+                </span>
                 <span className="text-primary opacity-0 transition-opacity group-hover:opacity-100">
                   →
                 </span>

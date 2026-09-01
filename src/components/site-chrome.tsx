@@ -94,7 +94,7 @@ export function SiteFooter() {
         </p>
         <a
           href={`mailto:${profile.email}`}
-          className="display mt-4 block break-words text-[12vw] leading-[0.85] text-foreground transition-colors hover:text-primary md:text-[6vw]"
+          className="mt-4 block break-words font-mono text-xl font-medium tracking-tight text-foreground transition-colors hover:text-primary md:text-3xl"
         >
           {profile.email}
         </a>
