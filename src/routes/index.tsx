@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import heroImg from "@/assets/hero-bg.jpg";
 import { Marquee } from "@/components/site-chrome";
+import { AuroraBackground } from "@/components/aurora-bg";
+import { Magnetic } from "@/components/magnetic";
+import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
 
 export const Route = createFileRoute("/")({
@@ -18,28 +20,54 @@ export const Route = createFileRoute("/")({
         content:
           "Vendor risk assessments, IAM governance and security remediation, translated into decisions leadership can act on.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
 });
 
+function Reveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const { ref, shown } = useReveal<HTMLDivElement>();
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`reveal ${shown ? "reveal-in" : ""} ${className ?? ""}`}
+    >
+      {children}
+    </div>
+  );
+}
+
 function Index() {
+  const scrollY = useScrollY();
+
   return (
     <main>
-      <section className="grain relative overflow-hidden border-b border-border">
-        <img
-          src={heroImg}
-          alt=""
-          width={1600}
-          height={1200}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+      <section className="relative overflow-hidden border-b border-border">
+        <AuroraBackground />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
-          <h1 className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]">
+          <h1
+            className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]"
+            style={{ transform: `translate3d(0, ${scrollY * -0.12}px, 0)` }}
+          >
             <span className="block">{profile.first}</span>
-            <span className="block outline-text">{profile.last}</span>
+            <span
+              className="block outline-text"
+              style={{ transform: `translate3d(0, ${scrollY * -0.05}px, 0)` }}
+            >
+              {profile.last}
+            </span>
           </h1>
           <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-[1.4fr_1fr]">
             <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -48,12 +76,14 @@ function Index() {
             <div className="flex flex-col items-start gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               <span>{profile.location}</span>
               <span>Work authorization: {profile.authorization}</span>
-              <Link
-                to="/contact"
-                className="mt-2 inline-flex items-center gap-2 bg-primary px-6 py-3 font-medium tracking-[0.2em] text-primary-foreground transition-transform hover:-translate-y-0.5"
-              >
-                Get in touch
-              </Link>
+              <Magnetic className="mt-2">
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 bg-primary px-6 py-3 font-medium tracking-[0.2em] text-primary-foreground"
+                >
+                  Get in touch
+                </Link>
+              </Magnetic>
             </div>
           </div>
         </div>
@@ -62,64 +92,75 @@ function Index() {
       <Marquee />
 
       <section className="mx-auto grid max-w-[1400px] grid-cols-2 gap-px border-b border-border bg-border md:grid-cols-4">
-        {stats.map((s) => (
-          <div key={s.label} className="bg-background p-6 md:p-10">
-            <p className="display heat-text text-5xl md:text-7xl">{s.value}</p>
-            <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              {s.label}
-            </p>
-          </div>
+        {stats.map((s, i) => (
+          <Reveal key={s.label} delay={i * 90} className="bg-background">
+            <div className="p-6 md:p-10">
+              <p className="display heat-text text-5xl md:text-7xl">{s.value}</p>
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                {s.label}
+              </p>
+            </div>
+          </Reveal>
         ))}
       </section>
 
       <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
-        <div className="flex items-end justify-between gap-6 border-b border-border pb-6">
-          <h2 className="display text-[12vw] leading-none md:text-[6vw]">Track record</h2>
-          <Link
-            to="/work"
-            className="whitespace-nowrap text-xs uppercase tracking-[0.2em] text-primary hover:underline"
-          >
-            All work →
-          </Link>
-        </div>
+        <Reveal>
+          <div className="flex items-end justify-between gap-6 border-b border-border pb-6">
+            <h2 className="display text-[12vw] leading-none md:text-[6vw]">Track record</h2>
+            <Magnetic strength={0.25}>
+              <Link
+                to="/work"
+                className="whitespace-nowrap text-xs uppercase tracking-[0.2em] text-primary hover:underline"
+              >
+                All work →
+              </Link>
+            </Magnetic>
+          </div>
+        </Reveal>
         <ul>
-          {experience.map((job) => (
-            <li
-              key={job.company}
-              className="group grid gap-2 border-b border-border py-8 md:grid-cols-[1fr_1.4fr_auto] md:items-baseline md:gap-8"
-            >
-              <span className="display text-3xl transition-colors group-hover:text-primary md:text-5xl">
-                {job.company}
-              </span>
-              <span className="text-sm text-muted-foreground">{job.title}</span>
-              <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                {job.period}
-              </span>
-            </li>
+          {experience.map((job, i) => (
+            <Reveal key={job.company} delay={i * 80}>
+              <li className="row-reveal group grid gap-2 border-b border-border py-8 md:grid-cols-[1fr_1.4fr_auto] md:items-baseline md:gap-8">
+                <span className="display relative text-3xl transition-all duration-500 group-hover:translate-x-3 group-hover:text-primary md:text-5xl">
+                  {job.company}
+                </span>
+                <span className="relative text-sm text-muted-foreground">{job.title}</span>
+                <span className="relative text-xs uppercase tracking-[0.2em] text-muted-foreground">
+                  {job.period}
+                </span>
+              </li>
+            </Reveal>
           ))}
         </ul>
       </section>
 
       <section className="border-y border-border bg-secondary">
         <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
-          <h2 className="display text-[12vw] leading-none md:text-[6vw]">Projects</h2>
+          <Reveal>
+            <h2 className="display text-[12vw] leading-none md:text-[6vw]">Projects</h2>
+          </Reveal>
           <div className="mt-12 grid gap-px bg-border md:grid-cols-3">
-            {projects.map((p) => (
-              <article key={p.index} className="bg-secondary p-8">
-                <span className="display text-primary">{p.index}</span>
-                <h3 className="display mt-4 text-3xl">{p.title}</h3>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{p.blurb}</p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
-                    >
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </article>
+            {projects.map((p, i) => (
+              <Reveal key={p.index} delay={i * 110} className="bg-secondary">
+                <article className="row-reveal h-full p-8">
+                  <span className="display relative text-primary">{p.index}</span>
+                  <h3 className="display relative mt-4 text-3xl">{p.title}</h3>
+                  <p className="relative mt-4 text-sm leading-relaxed text-muted-foreground">
+                    {p.blurb}
+                  </p>
+                  <div className="relative mt-6 flex flex-wrap gap-2">
+                    {p.tags.map((t) => (
+                      <span
+                        key={t}
+                        className="border border-border px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-muted-foreground"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
