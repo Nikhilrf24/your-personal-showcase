@@ -215,3 +215,204 @@
   background-size: 72px 72px;
   mask-image: linear-gradient(to bottom, black 0%, transparent 90%);
 }
+
+/* ---------- Animated aurora background ---------- */
+
+@utility aurora-stage {
+  --mx: 0;
+  --my: 0;
+  background: var(--background);
+}
+
+@utility aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+
+@utility aurora-blob-1 {
+  top: -18%;
+  right: -8%;
+  width: 62vw;
+  height: 62vw;
+  background: radial-gradient(circle at 40% 40%, var(--primary), transparent 68%);
+  animation: aurora-drift-a 22s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--mx) * -40px), calc(var(--my) * -32px), 0);
+}
+
+@utility aurora-blob-2 {
+  bottom: -32%;
+  right: 12%;
+  width: 48vw;
+  height: 48vw;
+  background: radial-gradient(circle at 50% 50%, oklch(0.55 0.26 305), transparent 66%);
+  opacity: 0.42;
+  animation: aurora-drift-b 28s ease-in-out infinite alternate;
+}
+
+@utility aurora-blob-3 {
+  top: 22%;
+  right: 34%;
+  width: 34vw;
+  height: 34vw;
+  background: radial-gradient(circle at 50% 50%, var(--accent), transparent 64%);
+  opacity: 0.4;
+  animation: aurora-drift-c 19s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6%, 8%, 0) scale(1.15);
+  }
+}
+
+@keyframes aurora-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.1);
+  }
+  to {
+    transform: translate3d(9%, -10%, 0) scale(0.95);
+  }
+}
+
+@keyframes aurora-drift-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(-10%, -6%, 0) scale(1.2);
+  }
+}
+
+@utility wire-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 7%, transparent) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: radial-gradient(120% 90% at 60% 25%, black 0%, transparent 78%);
+  transform: translate3d(calc(var(--mx) * 26px), calc(var(--my) * 26px), 0);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility float-shape {
+  position: absolute;
+  border: 1.5px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  will-change: transform;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility float-shape-1 {
+  top: 14%;
+  right: 16%;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  animation: shape-float 14s ease-in-out infinite alternate;
+  transform: translate3d(calc(var(--mx) * 55px), calc(var(--my) * 45px), 0);
+}
+
+@utility float-shape-2 {
+  bottom: 16%;
+  right: 30%;
+  width: 130px;
+  height: 130px;
+  border-color: color-mix(in oklab, var(--foreground) 35%, transparent);
+  animation: shape-spin 26s linear infinite;
+  transform: translate3d(calc(var(--mx) * -38px), calc(var(--my) * 30px), 0) rotate(18deg);
+}
+
+@utility float-shape-3 {
+  top: 52%;
+  right: 8%;
+  width: 84px;
+  height: 84px;
+  border-radius: 30%;
+  border-color: color-mix(in oklab, var(--accent) 70%, transparent);
+  animation: shape-float 11s ease-in-out infinite alternate-reverse;
+  transform: translate3d(calc(var(--mx) * 70px), calc(var(--my) * -50px), 0);
+}
+
+@keyframes shape-float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -34px;
+  }
+}
+
+@keyframes shape-spin {
+  from {
+    rotate: 0deg;
+  }
+  to {
+    rotate: 360deg;
+  }
+}
+
+@utility grain-overlay {
+  opacity: 0.4;
+  background-image: radial-gradient(
+    color-mix(in oklab, var(--foreground) 9%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+}
+
+/* ---------- Scroll reveal ---------- */
+
+@utility reveal {
+  opacity: 0;
+  transform: translateY(34px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility reveal-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Interactions ---------- */
+
+@utility magnetic {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@utility row-reveal {
+  position: relative;
+  overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-heat);
+    opacity: 0;
+    transform: translateY(100%);
+    transition:
+      transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease;
+  }
+  &:hover::before {
+    opacity: 0.08;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob,
+  .float-shape {
+    animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
