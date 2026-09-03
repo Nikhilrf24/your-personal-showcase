@@ -317,8 +317,8 @@
 }
 
 @utility float-shape-2 {
-  bottom: 16%;
-  right: 30%;
+  bottom: 10%;
+  right: 6%;
   width: 130px;
   height: 130px;
   border-color: color-mix(in oklab, var(--foreground) 35%, transparent);
