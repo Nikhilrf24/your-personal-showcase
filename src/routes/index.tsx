@@ -61,12 +61,19 @@ function Index() {
             className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]"
             style={{ transform: `translate3d(0, ${scrollY * -0.12}px, 0)` }}
           >
-            <span className="block">{profile.first}</span>
+            <span className="block" aria-label={profile.first}>
+              {profile.first.split("").map((c, i) => (
+                <span key={i} aria-hidden="true" className="kinetic-char" style={{ animationDelay: `${i * 60}ms` }}>{c}</span>
+              ))}
+            </span>
             <span
               className="block outline-text"
+              aria-label={profile.last}
               style={{ transform: `translate3d(0, ${scrollY * -0.05}px, 0)` }}
             >
-              {profile.last}
+              {profile.last.split("").map((c, i) => (
+                <span key={i} aria-hidden="true" className="kinetic-char" style={{ animationDelay: `${300 + i * 60}ms` }}>{c}</span>
+              ))}
             </span>
           </h1>
           <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-[1.4fr_1fr]">

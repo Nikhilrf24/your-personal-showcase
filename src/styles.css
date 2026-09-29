@@ -416,3 +416,17 @@
   }
 }
 
+
+/* Kinetic per-letter headline (Awwwards 2026 trend) */
+.kinetic-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(60%) rotate(6deg);
+  animation: kinetic-in 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), color 0.35s;
+}
+.kinetic-char:hover { transform: translateY(-8%) skewX(-6deg); color: var(--primary); }
+@keyframes kinetic-in { to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .kinetic-char { animation: none; opacity: 1; transform: none; }
+}
