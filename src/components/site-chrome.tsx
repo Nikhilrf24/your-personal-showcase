@@ -5,6 +5,7 @@ import { profile, marqueeWords } from "@/lib/resume";
 const nav = [
   { to: "/", label: "Home" },
   { to: "/work", label: "Work" },
+  { to: "/writing", label: "Writing" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
