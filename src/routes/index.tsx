@@ -4,6 +4,7 @@ import { AuroraBackground } from "@/components/aurora-bg";
 import { Magnetic } from "@/components/magnetic";
 import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
+import portrait from "@/assets/nikhil-portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,6 +57,39 @@ function Index() {
       <section className="relative overflow-hidden border-b border-border">
         <AuroraBackground />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
+          <div
+            className="hero-card absolute right-10 top-16 hidden w-[300px] lg:block xl:right-24 xl:w-[340px]"
+            style={{ transform: `translate3d(0, ${scrollY * 0.08}px, 0)` }}
+          >
+            <Link to="/about" className="group relative block" aria-label="About Nikhil Joshi">
+              <div className="relative aspect-[4/5] overflow-hidden border-2 border-foreground bg-secondary shadow-[var(--shadow-slab)]">
+                <img
+                  src={portrait.url}
+                  alt="Portrait of Nikhil Joshi"
+                  className="h-full w-full object-cover object-[50%_35%] transition duration-700 group-hover:scale-105"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent mix-blend-multiply" />
+                <span className="absolute left-3 top-3 inline-flex items-center gap-2 bg-background px-3 py-1.5 text-[10px] uppercase tracking-[0.25em] text-foreground">
+                  <span className="pulse-dot h-2 w-2 rounded-full bg-accent" />
+                  Open to roles
+                </span>
+                <span className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-[10px] uppercase tracking-[0.25em] text-primary-foreground">
+                  <span>Risk · Trust · Controls</span>
+                  <span>↗</span>
+                </span>
+              </div>
+              <svg viewBox="0 0 200 200" className="spin-slow absolute -bottom-14 -left-14 h-32 w-32" aria-hidden="true">
+                <defs>
+                  <path id="ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+                </defs>
+                <circle cx="100" cy="100" r="58" className="fill-accent" />
+                <text className="fill-foreground text-[15px] uppercase tracking-[0.3em]">
+                  <textPath href="#ring">Vendor risk · GRC · IAM · ISO 27001 ·</textPath>
+                </text>
+                <text x="100" y="108" textAnchor="middle" className="fill-foreground font-[family-name:var(--font-display)] text-[26px]">3+ YRS</text>
+              </svg>
+            </Link>
+          </div>
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
           <h1
             className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]"
