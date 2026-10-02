@@ -39,7 +39,7 @@ export function TiltCard({ src, alt }: { src: string; alt: string }) {
 
         {/* floating elements pop forward */}
         <span
-          className="absolute -left-6 bottom-10 bg-background px-3 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground border-2 border-foreground"
+          className="absolute -left-6 -bottom-5 bg-background px-3 py-2 text-[10px] uppercase tracking-[0.25em] text-foreground border-2 border-foreground"
           style={{ transform: "translateZ(70px)" }}
         >
           Risk · Trust · Controls
