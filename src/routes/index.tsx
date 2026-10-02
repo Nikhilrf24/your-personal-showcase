@@ -58,7 +58,7 @@ function Index() {
         <AuroraBackground />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
           <div
-            className="hero-card absolute right-10 top-16 hidden w-[300px] lg:block xl:right-24 xl:w-[340px]"
+            className="hero-card absolute right-10 top-24 hidden w-[250px] lg:block xl:right-24 xl:w-[290px]"
             style={{ transform: `translate3d(0, ${scrollY * 0.08}px, 0)` }}
           >
             <Link to="/about" className="group relative block" aria-label="About Nikhil Joshi">
@@ -78,7 +78,7 @@ function Index() {
                   <span>↗</span>
                 </span>
               </div>
-              <svg viewBox="0 0 200 200" className="spin-slow absolute -bottom-14 -left-14 h-32 w-32" aria-hidden="true">
+              <svg viewBox="0 0 200 200" className="spin-slow absolute -right-12 -top-12 h-32 w-32" aria-hidden="true">
                 <defs>
                   <path id="ring" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
                 </defs>
