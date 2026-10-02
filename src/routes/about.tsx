@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageShell } from "@/components/site-chrome";
 import { profile, skillGroups, education, certifications, development } from "@/lib/resume";
+import portrait from "@/assets/nikhil-portrait.jpg.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,8 +26,22 @@ function About() {
   return (
     <main>
       <PageShell eyebrow="Profile" title="About">
-        <section className="mx-auto max-w-[1400px] border-t border-border px-5 py-16 md:px-10 md:py-24">
-          <p className="max-w-4xl text-xl leading-relaxed text-muted-foreground md:text-2xl">
+        <section className="mx-auto grid max-w-[1400px] items-center gap-12 border-t border-border px-5 py-16 md:grid-cols-[0.9fr_1.1fr] md:px-10 md:py-24">
+          <figure className="portrait-frame group relative">
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src={portrait.url}
+                alt="Nikhil Joshi smiling with arms crossed at a mountain lake in Rocky Mountain National Park"
+                className="h-full w-full object-cover object-[50%_35%] grayscale-[35%] transition duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                loading="eager"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/40 via-transparent to-transparent mix-blend-multiply" />
+            </div>
+            <figcaption className="absolute -bottom-4 left-4 bg-accent px-4 py-2 text-[10px] uppercase tracking-[0.3em] text-accent-foreground">
+              Nikhil Joshi · Atlanta, GA
+            </figcaption>
+          </figure>
+          <p className="text-xl leading-relaxed text-muted-foreground md:text-2xl">
             {profile.summary}
           </p>
         </section>

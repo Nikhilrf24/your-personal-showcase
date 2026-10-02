@@ -430,3 +430,14 @@
 @media (prefers-reduced-motion: reduce) {
   .kinetic-char { animation: none; opacity: 1; transform: none; }
 }
+
+/* Offset outline frame behind portrait */
+.portrait-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translate(14px, 14px);
+  border: 2px solid var(--primary);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.portrait-frame:hover::before { transform: translate(22px, 22px); }
