@@ -62,7 +62,10 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
       const { x: mx, y: my } = mouse.current;
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-          const v = 1 - lum[y * cols + x];
+          const raw = 1 - lum[y * cols + x];
+          const fx = (x / cols - 0.5) / 0.42, fy = (y / rows - 0.55) / 0.6;
+          const focus = Math.max(0, 1 - Math.hypot(fx, fy) ** 2);
+          const v = Math.min(1, Math.max(0, (raw - 0.3) * 1.9)) * (0.25 + focus * 0.75);
           const px = x * step + step / 2, py = y * step + step / 2;
           const dist = Math.hypot(px - mx, py - my);
           const near = Math.max(0, 1 - dist / 90);
@@ -106,7 +109,7 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
           <span className="flex items-center gap-2 border-l-2 border-foreground px-3 py-2">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-accent" /> online
           </span>
-          <span className="border-l-2 border-foreground px-3 py-2">ATL · {time}</span>
+          <span className="border-l-2 border-foreground px-3 py-2">{time}</span>
         </div>
       </div>
       <div className="relative">
@@ -121,11 +124,11 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
           }}
           onPointerLeave={() => (mouse.current = { x: -9999, y: -9999 })}
         />
-        <div className="pointer-events-none absolute left-4 top-3 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+        <div className="pointer-events-none absolute left-3 top-3 bg-background/85 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
           <p className="display text-2xl">01</p>
           <p className="text-muted-foreground">portrait.dot</p>
         </div>
-        <div className="pointer-events-none absolute bottom-3 right-4 text-right font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
+        <div className="pointer-events-none absolute bottom-3 right-3 bg-background/85 px-2 py-1 text-right font-mono text-[10px] uppercase tracking-[0.2em] text-primary">
           <p className="display text-2xl">02</p>
           <p className="text-muted-foreground">grc.trust</p>
         </div>
