@@ -5,7 +5,7 @@ import { Magnetic } from "@/components/magnetic";
 import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
 import lake from "@/assets/nikhil-lake.jpg";
-import { TiltCard } from "@/components/tilt-card";
+import { HalftonePortrait } from "@/components/halftone-portrait";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -59,11 +59,11 @@ function Index() {
         <AuroraBackground />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
           <div
-            className="hero-card absolute right-10 top-24 hidden w-[250px] lg:block xl:right-24 xl:w-[290px]"
+            className="hero-card absolute right-10 top-24 hidden w-[300px] lg:block xl:right-20 xl:w-[360px]"
             style={{ transform: `translate3d(0, ${scrollY * 0.08}px, 0)` }}
           >
             <Link to="/about" className="block" aria-label="About Nikhil Joshi">
-              <TiltCard src={lake} alt="Nikhil Joshi at a mountain lake" />
+              <HalftonePortrait src={lake} alt="Nikhil Joshi at a mountain lake, as a dot portrait" />
             </Link>
           </div>
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
