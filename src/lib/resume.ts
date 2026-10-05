@@ -32,7 +32,7 @@ export const marqueeWords = [
 
 export const experience = [
   {
-    company: "Nagarro Inc.",
+    company: "Mercedes-Benz",
     context: "Mercedes-Benz Cybersecurity Client Engagement — Atlanta, GA",
     title: "Third-Party Risk Management (TPRM) Associate, GRC",
     period: "Jul 2023 – Present",

@@ -9,7 +9,7 @@ export const Route = createFileRoute("/work")({
       {
         name: "description",
         content:
-          "Third-party risk, GRC and vulnerability management experience across Nagarro/Mercedes-Benz, Intel, TikTok and TCS.",
+          "Third-party risk, GRC and vulnerability management experience across Mercedes-Benz, Intel, TikTok and TCS.",
       },
       { property: "og:title", content: "Work — Nikhil Joshi, TPRM & GRC" },
       {
