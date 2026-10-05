@@ -5,7 +5,7 @@ import { Magnetic } from "@/components/magnetic";
 import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
 import lake from "@/assets/nikhil-lake.jpg";
-import { HalftonePortrait } from "@/components/halftone-portrait";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,17 +58,11 @@ function Index() {
       <section className="relative overflow-hidden border-b border-border">
         <AuroraBackground />
         <div className="relative mx-auto max-w-[1400px] px-5 pb-16 pt-20 md:px-10 md:pb-24 md:pt-28">
-          <div
-            className="hero-card absolute right-10 top-8 hidden w-[280px] lg:block xl:right-16 xl:w-[320px]"
-            style={{ transform: `translate3d(0, ${scrollY * 0.08}px, 0)` }}
-          >
-            <Link to="/about" className="block" aria-label="About Nikhil Joshi">
-              <HalftonePortrait src={lake} alt="Nikhil Joshi at a mountain lake, as a dot portrait" />
-            </Link>
-          </div>
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
+          <div>
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
           <h1
-            className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[13vw]"
+            className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[14vw] lg:text-[12vw] xl:text-[12.5rem]"
             style={{ transform: `translate3d(0, ${scrollY * -0.12}px, 0)` }}
           >
             <span className="block" aria-label={profile.first}>
@@ -86,6 +80,26 @@ function Index() {
               ))}
             </span>
           </h1>
+          </div>
+          <Link
+            to="/about"
+            aria-label="About Nikhil Joshi"
+            className="split-photo group relative block"
+            style={{ transform: `translate3d(0, ${scrollY * 0.06}px, 0)` }}
+          >
+            <div className="relative aspect-[4/5] overflow-hidden border-2 border-foreground bg-secondary sm:aspect-[5/4] lg:aspect-[4/5] xl:aspect-[6/5]">
+              <img
+                src={lake}
+                alt="Nikhil Joshi at a mountain lake"
+                className="h-full w-full scale-[1.35] object-cover object-[53%_78%] transition-transform duration-[1.2s] ease-out group-hover:scale-[1.45]"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/50 via-transparent to-transparent mix-blend-multiply" />
+              <span className="absolute bottom-4 left-4 bg-background px-3 py-2 font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">
+                Atlanta, GA
+              </span>
+            </div>
+          </Link>
+          </div>
           <div className="mt-10 grid gap-8 border-t border-border pt-8 md:grid-cols-[1.4fr_1fr]">
             <p className="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
               {profile.summary}
