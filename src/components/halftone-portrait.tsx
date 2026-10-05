@@ -29,7 +29,7 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
     let raf = 0;
     let lum: Float32Array | null = null;
     let cols = 0, rows = 0;
-    const step = 7;
+    const step = 5;
 
     const setup = () => {
       const r = canvas.getBoundingClientRect();
@@ -43,12 +43,10 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
       off.width = cols;
       off.height = rows;
       const o = off.getContext("2d")!;
-      // cover-crop focused on the subject
-      const ar = cols / rows, iar = img.width / img.height;
-      let sw = img.width, sh = img.height;
-      if (iar > ar) sw = sh * ar; else sh = sw / ar;
-      sw *= 0.7; sh *= 0.7;
-      const sx = (img.width - sw) * 0.5, sy = (img.height - sh) * 0.55;
+      // crop tight on the subject (centered at ~53% x, from mid-height down)
+      const ar = cols / rows;
+      const sh = img.height * 0.52, sw = sh * ar;
+      const sx = img.width * 0.535 - sw / 2, sy = img.height * 0.48;
       o.drawImage(img, sx, sy, sw, sh, 0, 0, cols, rows);
       const d = o.getImageData(0, 0, cols, rows).data;
       lum = new Float32Array(cols * rows);
