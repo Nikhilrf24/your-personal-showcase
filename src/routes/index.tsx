@@ -62,7 +62,7 @@ function Index() {
           <div>
           <p className="text-xs uppercase tracking-[0.35em] text-primary">{profile.role}</p>
           <h1
-            className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[14vw] lg:text-[10vw] xl:text-[9.5rem]"
+            className="display rise-in mt-6 text-[20vw] leading-[0.8] md:text-[14vw] lg:text-[12vw] xl:text-[12.5rem]"
             style={{ transform: `translate3d(0, ${scrollY * -0.12}px, 0)` }}
           >
             <span className="block" aria-label={profile.first}>
@@ -87,7 +87,7 @@ function Index() {
             className="split-photo group relative block"
             style={{ transform: `translate3d(0, ${scrollY * 0.06}px, 0)` }}
           >
-            <div className="relative aspect-[4/5] overflow-hidden border-2 border-foreground bg-secondary sm:aspect-[5/4] lg:aspect-[4/5] xl:aspect-[1/1]">
+            <div className="relative aspect-[4/5] overflow-hidden border-2 border-foreground bg-secondary sm:aspect-[5/4] lg:aspect-[4/5] xl:aspect-[6/5]">
               <img
                 src={lake}
                 alt="Nikhil Joshi at a mountain lake"
