@@ -103,7 +103,6 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
         <div className="flex">
           <span className="border-r-2 border-foreground px-3 py-2 font-bold text-primary">NJ</span>
           <span className="px-3 py-2 text-muted-foreground">file</span>
-          <span className="px-3 py-2 text-muted-foreground">risk.log</span>
         </div>
         <div className="flex">
           <span className="flex items-center gap-2 border-l-2 border-foreground px-3 py-2">
