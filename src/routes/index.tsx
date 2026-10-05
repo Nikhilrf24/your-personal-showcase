@@ -5,7 +5,7 @@ import { Magnetic } from "@/components/magnetic";
 import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
 import lake from "@/assets/nikhil-lake.jpg";
-import { HalftonePortrait } from "@/components/halftone-portrait";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({

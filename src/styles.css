@@ -454,3 +454,5 @@
 @media (prefers-reduced-motion: reduce) { .tilt-card { animation: none; transition: none; transform: none !important; } }
 @media (min-width: 1024px) { .float-shape-1 { display: none; } }
 @media (prefers-reduced-motion: reduce) { .spin-slow, .pulse-dot { animation: none; } }
+.split-photo::before { content: ""; position: absolute; inset: 0; transform: translate(16px, 16px); background: var(--accent); transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.split-photo:hover::before { transform: translate(24px, 24px); }
