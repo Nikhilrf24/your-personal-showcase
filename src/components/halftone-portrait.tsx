@@ -51,7 +51,7 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
       const d = o.getImageData(0, 0, cols, rows).data;
       lum = new Float32Array(cols * rows);
       for (let i = 0; i < cols * rows; i++) {
-        lum[i] = (0.299 * d[i * 4] + 0.587 * d[i * 4 + 1] + 0.114 * d[i * 4 + 2]) / 255;
+        lum[i] = (0.299 * d[i * 4]! + 0.587 * d[i * 4 + 1]! + 0.114 * d[i * 4 + 2]!) / 255;
       }
     };
 
@@ -62,7 +62,7 @@ export function HalftonePortrait({ src, alt }: { src: string; alt: string }) {
       const { x: mx, y: my } = mouse.current;
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-          const raw = 1 - lum[y * cols + x];
+          const raw = 1 - lum[y * cols + x]!;
           const fx = (x / cols - 0.5) / 0.42, fy = (y / rows - 0.55) / 0.6;
           const focus = Math.max(0, 1 - Math.hypot(fx, fy) ** 2);
           const v = Math.min(1, Math.max(0, (raw - 0.3) * 1.9)) * (0.25 + focus * 0.75);
