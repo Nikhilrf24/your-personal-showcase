@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Nikhil Joshi is a cybersecurity, third-party risk and GRC professional in Atlanta assessing 80+ vendor applications against ISO 27001, NIST CSF and SOC 2.",
+          "Nikhil Joshi is a cybersecurity, third-party risk and GRC professional in Atlanta assessing 50+ vendor applications against ISO 27001, NIST CSF and SOC 2.",
       },
       { property: "og:title", content: "Nikhil Joshi — Cybersecurity, TPRM & GRC Portfolio" },
       {
@@ -106,7 +106,7 @@ function Index() {
             </p>
             <div className="flex flex-col items-start gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               <span>{profile.location}</span>
-              <span>Work authorization: {profile.authorization}</span>
+              <span>7 years in technology</span>
               <Magnetic className="mt-2">
                 <Link
                   to="/contact"
