@@ -29,6 +29,18 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const principles = [
+  { n: "01", title: "Evidence over checkboxes", text: "Audit reports, questionnaires and technical proof — reviewed against ISO 27001, NIST and SOC 2, not taken on trust." },
+  { n: "02", title: "Risk in plain language", text: "Turning findings into clear, risk-based decisions that application owners and leadership can act on." },
+  { n: "03", title: "Closed means validated", text: "Every finding tracked in Archer GRC through remediation, risk acceptance and verified closure." },
+];
+
+const offClock = [
+  { tag: "Learning", title: "Web security labs", text: "Sharpening AppSec skills through PortSwigger Web Security Academy." },
+  { tag: "Exploring", title: "AI security", text: "Following how generative AI and chatbots change the attack surface and governance." },
+  { tag: "Outdoors", title: "Mountains & lakes", text: "Recharging on trails and in national parks — like the photo up top." },
+];
+
 function Reveal({
   children,
   delay = 0,
@@ -126,8 +138,8 @@ function Index() {
         {stats.map((s, i) => (
           <Reveal key={s.label} delay={i * 90} className="bg-background">
             <div className="p-6 md:p-10">
-              <p className="display heat-text text-5xl md:text-7xl">{s.value}</p>
-              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
+              <p className="display text-5xl text-primary md:text-7xl">{s.value}</p>
+              <p className="mt-3 text-xs uppercase tracking-[0.2em] text-foreground">
                 {s.label}
               </p>
             </div>
@@ -194,6 +206,55 @@ function Index() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+      <section className="relative overflow-hidden border-b border-border bg-foreground text-background">
+        <div className="mx-auto max-w-[1400px] px-5 py-24 md:px-10 md:py-32">
+          <Reveal>
+            <p className="text-xs uppercase tracking-[0.35em] text-accent">Approach</p>
+            <blockquote className="display mt-6 text-[11vw] leading-[0.9] md:text-[6.5vw]">
+              Find the risk. <span className="text-accent">Fix it.</span> Prove it's closed.
+            </blockquote>
+          </Reveal>
+          <div className="mt-16 grid gap-px bg-background/15 md:grid-cols-3">
+            {principles.map((pr, i) => (
+              <Reveal key={pr.n} delay={i * 100} className="bg-foreground">
+                <div className="p-8">
+                  <span className="font-mono text-xs text-accent">{pr.n}</span>
+                  <h3 className="display mt-4 text-3xl">{pr.title}</h3>
+                  <p className="mt-4 text-sm leading-relaxed text-background/70">{pr.text}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
+        <Reveal>
+          <h2 className="display text-[12vw] leading-none md:text-[6vw]">Off the clock</h2>
+        </Reveal>
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {offClock.map((o, i) => (
+            <Reveal key={o.title} delay={i * 100}>
+              <div className="row-reveal h-full border-2 border-foreground p-8">
+                <p className="relative font-mono text-xs uppercase tracking-[0.2em] text-primary">{o.tag}</p>
+                <h3 className="display relative mt-4 text-3xl">{o.title}</h3>
+                <p className="relative mt-4 text-sm leading-relaxed text-muted-foreground">{o.text}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-t border-border bg-primary text-primary-foreground">
+        <div className="mx-auto flex max-w-[1400px] flex-col items-start justify-between gap-8 px-5 py-20 md:flex-row md:items-end md:px-10">
+          <h2 className="display text-[14vw] leading-[0.85] md:text-[7vw]">Let's talk<br />security.</h2>
+          <Magnetic>
+            <Link to="/contact" className="inline-flex bg-accent px-8 py-4 text-xs font-medium uppercase tracking-[0.25em] text-accent-foreground">
+              Get in touch →
+            </Link>
+          </Magnetic>
         </div>
       </section>
     </main>
