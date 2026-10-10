@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Nikhil Joshi is a cybersecurity, third-party risk and GRC professional in Atlanta assessing 80+ vendor applications against ISO 27001, NIST CSF and SOC 2.",
+          "Nikhil Joshi is a cybersecurity, third-party risk and GRC professional in Atlanta assessing 50+ vendor applications against ISO 27001, NIST CSF and SOC 2.",
       },
       { property: "og:title", content: "Nikhil Joshi — Cybersecurity, TPRM & GRC Portfolio" },
       {
