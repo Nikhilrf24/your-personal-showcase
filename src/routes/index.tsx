@@ -106,7 +106,7 @@ function Index() {
             </p>
             <div className="flex flex-col items-start gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
               <span>{profile.location}</span>
-              <span>Work authorization: {profile.authorization}</span>
+              <span>7 years in technology</span>
               <Magnetic className="mt-2">
                 <Link
                   to="/contact"
