@@ -34,7 +34,6 @@ function Contact() {
         <section className="mx-auto max-w-[1400px] border-t border-border px-5 py-12 md:px-10">
           <p className="max-w-2xl text-lg text-muted-foreground">
             Open to cybersecurity, third-party risk, application security and IAM opportunities.
-            Based in {profile.location}.
           </p>
           <div className="mt-12 divide-y divide-border border-y border-border">
             {links.map((l) => (
