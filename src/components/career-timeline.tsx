@@ -1,104 +1,68 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { experience } from "@/lib/resume";
 
-/** Pinned scroll story: one large panel per role, oldest first. */
+/** Expanding accordion panels: hover, tap or focus a role to open it. Oldest first. */
 export function CareerTimeline() {
   const items = [...experience].reverse();
-  const ref = useRef<HTMLElement>(null);
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    let frame = 0;
-    const measure = () => {
-      frame = 0;
-      const el = ref.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
-      setProgress(Math.min(1, Math.max(0, -r.top / Math.max(1, total))));
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, []);
-
-  const scaled = progress * items.length;
-  const active = Math.min(items.length - 1, Math.floor(scaled));
-
-  const jumpTo = (i: number) => {
-    const el = ref.current;
-    if (!el) return;
-    const total = el.offsetHeight - window.innerHeight;
-    const top = el.getBoundingClientRect().top + window.scrollY + ((i + 0.5) / items.length) * total;
-    window.scrollTo({ top, behavior: "smooth" });
-  };
+  const [active, setActive] = useState(items.length - 1);
 
   return (
-    <section
-      ref={ref}
-      className="relative border-b border-border bg-foreground text-background"
-      style={{ height: `${items.length * 55 + 100}vh` }}
-      aria-label="Career timeline"
-    >
-      <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
-        <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between px-5 pt-24 md:px-10">
-          <p className="text-xs uppercase tracking-[0.35em] text-accent">The journey · 2018 → now</p>
-          <p className="font-mono text-xs text-background/60">
-            {String(active + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
+    <section className="border-b border-border bg-foreground text-background" aria-label="Career timeline">
+      <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
+        <div className="flex items-end justify-between gap-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.35em] text-accent">The journey · 2018 → now</p>
+            <h2 className="display mt-4 text-[12vw] leading-none md:text-[6vw]">Career path</h2>
+          </div>
+          <p className="hidden text-xs uppercase tracking-[0.2em] text-background/60 md:block">
+            Hover or tap a role
           </p>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[1400px] flex-1 px-5 md:px-10">
+        <div className="mt-12 flex flex-col gap-2 md:h-[480px] md:flex-row">
           {items.map((job, i) => {
-            const state = i === active ? "on" : i < active ? "past" : "next";
+            const on = i === active;
             return (
-              <article
-                key={job.company}
-                className="timeline-panel absolute inset-x-5 top-1/2 md:inset-x-10"
-                data-state={state}
-                aria-hidden={state !== "on"}
-              >
-                <p className="font-mono text-sm text-accent">{job.period}</p>
-                <h3 className="display mt-3 text-[13vw] leading-[0.85] md:text-[8vw]">{job.company}</h3>
-                <p className="mt-4 max-w-3xl text-lg text-background/80 md:text-xl">{job.title}</p>
-                <p className="mt-3 max-w-3xl text-sm text-background/60 md:text-base">{job.points[0]}</p>
-              </article>
-            );
-          })}
-        </div>
-
-        <div className="mx-auto w-full max-w-[1400px] px-5 pb-10 md:px-10">
-          <div className="flex gap-2">
-            {items.map((job, i) => (
               <button
                 key={job.company}
                 type="button"
-                onClick={() => jumpTo(i)}
-                className="flex-1 cursor-pointer text-left"
-                aria-label={`Go to ${job.company}`}
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onClick={() => setActive(i)}
+                aria-expanded={on}
+                className={`group relative flex cursor-pointer flex-col overflow-hidden border text-left transition-all duration-500 ease-out md:min-w-0 ${
+                  on
+                    ? "border-accent bg-primary text-primary-foreground md:flex-[4]"
+                    : "border-background/20 bg-background/5 hover:bg-background/10 md:flex-1"
+                }`}
               >
-                <div className="h-1 overflow-hidden rounded-full bg-background/15">
-                  <div
-                    className="h-full bg-accent"
-                    style={{ width: `${Math.min(1, Math.max(0, scaled - i)) * 100}%` }}
-                  />
+                <div className="flex items-center justify-between gap-4 p-6">
+                  <span className={`font-mono text-xs ${on ? "text-accent" : "text-background/60"}`}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className={`font-mono text-xs ${on ? "text-accent" : "text-background/50"} md:hidden`}>
+                    {job.period}
+                  </span>
                 </div>
-                <p
-                  className={`mt-2 hidden text-[10px] uppercase tracking-[0.2em] transition-colors md:block ${i === active ? "text-background" : "text-background/40 hover:text-background/70"}`}
-                >
-                  {job.company}
-                </p>
+
+                {!on && (
+                  <span className="display hidden flex-1 items-end p-6 text-3xl leading-none md:flex md:[writing-mode:vertical-rl] md:rotate-180 md:items-start md:self-start">
+                    {job.company}
+                  </span>
+                )}
+                {!on && <span className="display px-6 pb-6 text-2xl md:hidden">{job.company}</span>}
+
+                {on && (
+                  <div className="mt-auto p-6 md:p-10">
+                    <p className="hidden font-mono text-sm text-accent md:block">{job.period}</p>
+                    <h3 className="display mt-3 text-4xl leading-[0.9] md:text-6xl">{job.company}</h3>
+                    <p className="mt-4 max-w-2xl text-base opacity-90 md:text-lg">{job.title}</p>
+                    <p className="mt-3 max-w-2xl text-sm opacity-75">{job.points[0]}</p>
+                  </div>
+                )}
               </button>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
