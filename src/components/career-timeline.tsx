@@ -8,29 +8,44 @@ export function CareerTimeline() {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const onScroll = () => {
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
       const el = ref.current;
       if (!el) return;
       const r = el.getBoundingClientRect();
       const total = r.height - window.innerHeight;
       setProgress(Math.min(1, Math.max(0, -r.top / Math.max(1, total))));
     };
-    onScroll();
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+    measure();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
   }, []);
 
-  const active = Math.min(items.length - 1, Math.floor(progress * items.length));
+  const scaled = progress * items.length;
+  const active = Math.min(items.length - 1, Math.floor(scaled));
+
+  const jumpTo = (i: number) => {
+    const el = ref.current;
+    if (!el) return;
+    const total = el.offsetHeight - window.innerHeight;
+    const top = el.getBoundingClientRect().top + window.scrollY + ((i + 0.5) / items.length) * total;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   return (
     <section
       ref={ref}
       className="relative border-b border-border bg-foreground text-background"
-      style={{ height: `${items.length * 90 + 10}vh` }}
+      style={{ height: `${items.length * 55 + 100}vh` }}
       aria-label="Career timeline"
     >
       <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
@@ -63,19 +78,25 @@ export function CareerTimeline() {
         <div className="mx-auto w-full max-w-[1400px] px-5 pb-10 md:px-10">
           <div className="flex gap-2">
             {items.map((job, i) => (
-              <div key={job.company} className="flex-1">
+              <button
+                key={job.company}
+                type="button"
+                onClick={() => jumpTo(i)}
+                className="flex-1 cursor-pointer text-left"
+                aria-label={`Go to ${job.company}`}
+              >
                 <div className="h-1 overflow-hidden rounded-full bg-background/15">
                   <div
-                    className="h-full bg-accent transition-all duration-500"
-                    style={{ width: i <= active ? "100%" : "0%" }}
+                    className="h-full bg-accent"
+                    style={{ width: `${Math.min(1, Math.max(0, scaled - i)) * 100}%` }}
                   />
                 </div>
                 <p
-                  className={`mt-2 hidden text-[10px] uppercase tracking-[0.2em] md:block ${i === active ? "text-background" : "text-background/40"}`}
+                  className={`mt-2 hidden text-[10px] uppercase tracking-[0.2em] transition-colors md:block ${i === active ? "text-background" : "text-background/40 hover:text-background/70"}`}
                 >
                   {job.company}
                 </p>
-              </div>
+              </button>
             ))}
           </div>
         </div>
