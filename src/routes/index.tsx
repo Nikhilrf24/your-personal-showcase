@@ -4,6 +4,7 @@ import { AuroraBackground } from "@/components/aurora-bg";
 import { Magnetic } from "@/components/magnetic";
 import { useReveal, useScrollY } from "@/hooks/use-reveal";
 import { profile, stats, experience, projects } from "@/lib/resume";
+import { CareerTimeline } from "@/components/career-timeline";
 import lake from "@/assets/nikhil-lake.jpg";
 
 
@@ -177,6 +178,8 @@ function Index() {
           ))}
         </ul>
       </section>
+
+      <CareerTimeline />
 
       <section className="border-y border-border bg-secondary">
         <div className="mx-auto max-w-[1400px] px-5 py-20 md:px-10 md:py-28">
